@@ -103,7 +103,6 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context,index)=> InkWell(
                               onTap: (){
                                 HomeCubit.get(context).PostJobsByGroupId(groupId: HomeCubit.get(context).GetHome!.groups!.data![index].id!);
-                             print("hhhhhhhhhhhhhhhhhhhhhhhhhh${HomeCubit.get(context).GetHome!.groups!.data![index].id}");
                               },
                               child: BuildGroupItem(context, HomeCubit.get(context).GetHome!.groups!.data![index])),
                           separatorBuilder: (context,index)=>SizedBox(width: MediaQuery.of(context).size.width*0.03,),
@@ -114,14 +113,60 @@ class HomeScreen extends StatelessWidget {
 
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-                Text(
-                  "New Jobs",
-                  style: TextStyle(
-                      color: HexColor("#45C5BD"),
-                      fontWeight: FontWeight.bold
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "New Jobs",
+                      style: TextStyle(
+                          color: HexColor("#45C5BD"),
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    TextButton(
+                      child: Text(
+                        " Filter",
+                        style: TextStyle(
+                            color: HexColor("#000080"),
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      onPressed: (){
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (_){
+                              return ConditionalBuilder(
+                                  condition: HomeCubit.get(context).GetCountries!=null,
+                                  builder: (context)=>GridView.count(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: 2,
+                                      crossAxisSpacing: 2,
+                                      childAspectRatio: 2/1,
+                                      children: List.generate(
+                                        HomeCubit.get(context).GetCountries!.countries!.length
+                                        , (index) => InkWell(
+                                        onTap: (){
+                                          HomeCubit.get(context).PostFilterJobs(
+                                              countryId: HomeCubit.get(context).GetCountries!.countries![index].id!,
+                                          );
+                                          print("jjjjjjjjjjjjjjjjjj ${HomeCubit.get(context).GetCountries!.countries![index].id!}");
+
+                                        },
+                                          child: BuildCountryItem(context, HomeCubit.get(context).GetCountries!.countries![index])),
+                                      )
+                                  ),
+                                fallback: (context)=>Center(child: CircularProgressIndicator(),),
+                              );
+                            }
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                if(state is JobsByGroupIdSuccessState)
                 ConditionalBuilder(
                   condition: state is JobsByGroupIdSuccessState,
                   builder: (context)=>SizedBox(
@@ -136,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                       childAspectRatio: 1/1.1,
                       children: List.generate(
                         HomeCubit.get(context).jobsByGroupIdModel!.jobs!.data!.length
-                        , (index) => BuildJobItem(context, HomeCubit.get(context).jobsByGroupIdModel!.jobs!.data![index]),
+                        , (index) => BuildJobByIdItem(context, HomeCubit.get(context).jobsByGroupIdModel!.jobs!.data![index]),
                       ),
                     ),
                   ),
@@ -150,6 +195,35 @@ class HomeScreen extends StatelessWidget {
                       ),
                       ),),
                 ),
+                if(state is FilterJobsSuccessState)
+                  ConditionalBuilder(
+                    condition: state is JobsByGroupIdSuccessState,
+                    builder: (context)=>SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 25,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: 1/1.1,
+                        children: List.generate(
+                          HomeCubit.get(context).filterJobsModel!.jobs!.data!.length
+                          , (index) => BuildJobByCountryItem(context, HomeCubit.get(context).filterJobsModel!.jobs!.data![index]),
+                        ),
+                      ),
+                    ),
+                    fallback: (context)=>Center(
+                      child: Text(
+                        "No Jobs Available",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22,
+                            fontStyle: FontStyle.italic
+                        ),
+                      ),),
+                  ),
               ],
             ),
           ),

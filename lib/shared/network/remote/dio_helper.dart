@@ -31,9 +31,6 @@ class DioHelper {
     required Map<String, dynamic> data,
   }) async
   {
-    dio!.options.headers={
-      'Content-Type':'multipart/form-data',
-    };
     return await dio!.post(
       url,
       queryParameters: query,

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/models/country_with_city.dart';
+import 'package:task/models/filter_jobs.dart';
 import 'package:task/models/home_group.dart';
 import 'package:task/models/jobs_by_group_id.dart';
 import 'package:task/modules/home_screen.dart';
@@ -60,7 +61,6 @@ class HomeCubit extends Cubit<HomeStates>
   JobsByGroupIdModel? jobsByGroupIdModel;
   void PostJobsByGroupId({required int groupId})
   {
-    print("firsttttttttttttttt $groupId");
     emit(JobsByGroupIdLoadingState());
     DioHelper.postData(
         url: 'https://live-job.dr-recruiter.com/api/guest/jobsByGroupId',
@@ -70,6 +70,7 @@ class HomeCubit extends Cubit<HomeStates>
     {
       jobsByGroupIdModel = JobsByGroupIdModel.fromJson(value.data);
       print(jobsByGroupIdModel!.status);
+      print(value.data);
       if(jobsByGroupIdModel!.status==true)
       {
         emit(JobsByGroupIdSuccessState());
@@ -90,6 +91,26 @@ class HomeCubit extends Cubit<HomeStates>
       emit(CountryGetSuccessState());
     }).catchError((e){
       emit(CountryGetErrorState(e));
+    });
+  }
+
+  FilterJobsModel? filterJobsModel;
+  void PostFilterJobs({required int countryId})
+  {
+    print("hhhhhhhhhhhhhhhhhh $countryId");
+    emit(FilterJobsLoadingState());
+    DioHelper.postData(
+        url: 'https://live-job.dr-recruiter.com/api/guest/filterJobs',
+        data: {
+          'country_id': countryId,
+        }).then((value)
+    {
+      filterJobsModel = FilterJobsModel.fromJson(value.data);
+      print(value.data);
+        emit(FilterJobsSuccessState());
+    }).catchError((e){
+      emit(FilterJobsErrorState(e));
+      print(e.toString());
     });
   }
 

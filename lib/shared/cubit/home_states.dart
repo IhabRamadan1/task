@@ -47,27 +47,12 @@ class JobsByGroupIdErrorState extends HomeStates{
 }
 
 
-// //country with city
-// class CountryWithCityLoaded extends HomeStates{
-//   final List<CountryWithCityModel> country;
-//   CountryWithCityLoaded(this.country);
-// }
-//
-// //filter jobs
-// class FilterJobsLoaded extends HomeStates{
-//   final List<FilterJobsModel> filter;
-//   FilterJobsLoaded(this.filter);
-// }
-//
-// //home group
-// class HomeGroupLoaded extends HomeStates{
-//   final List<HomeGroupModel> home;
-//   HomeGroupLoaded(this.home);
-// }
-//
-// //jobs by id group
-// class JobsByIdLoaded extends HomeStates{
-//   final List<JobsByGroupIdModel> jobs;
-//   JobsByIdLoaded(this.jobs);
-// }
+//post FilterJobs
+class FilterJobsLoadingState extends HomeStates{}
+class FilterJobsSuccessState extends HomeStates{}
+class FilterJobsErrorState extends HomeStates{
+  final String error;
+
+  FilterJobsErrorState(this.error);
+}
 
