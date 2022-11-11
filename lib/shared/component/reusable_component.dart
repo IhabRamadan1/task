@@ -6,7 +6,7 @@ import 'package:task/models/home_group.dart';
 import 'package:task/models/jobs_by_group_id.dart';
 
 
-Widget BuildGroupItem(context, DataHomeModel model )
+Widget buildGroupItem(context, DataHomeModel model )
 {
   return Container(
     height: MediaQuery.of(context).size.height * 0.2,
@@ -19,7 +19,7 @@ Widget BuildGroupItem(context, DataHomeModel model )
           color: Colors.grey.withOpacity(0.1),
           spreadRadius: 0.5,
           blurRadius: 0.5,
-          offset: Offset(0, 3), // changes position of shadow
+          offset: const Offset(0, 3), // changes position of shadow
         ),
       ],
     ),
@@ -32,7 +32,7 @@ Widget BuildGroupItem(context, DataHomeModel model )
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Card(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(25.0),
               ),
@@ -47,14 +47,14 @@ Widget BuildGroupItem(context, DataHomeModel model )
           ),
           Text(
               "${model.title}",
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15
             ),
           ),
           Text(
               "${model.jobs} jobs",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.green,
               fontSize: 12
             ),
@@ -62,7 +62,7 @@ Widget BuildGroupItem(context, DataHomeModel model )
           ),
           Text(
             "${model.employers} employers",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.grey,
                 fontSize: 12
             ),
@@ -70,7 +70,7 @@ Widget BuildGroupItem(context, DataHomeModel model )
           ),
           Text(
             "${model.employees} employees",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.grey,
                 fontSize: 12
             ),
@@ -82,7 +82,7 @@ Widget BuildGroupItem(context, DataHomeModel model )
   );
 }
 
-Widget BuildJobByIdItem(context, Data model)
+Widget buildJobByIdItem(context, Data model)
 {
   return Container(
     height: MediaQuery.of(context).size.height * 0.3,
@@ -95,7 +95,7 @@ Widget BuildJobByIdItem(context, Data model)
           color: Colors.grey.withOpacity(0.1),
           spreadRadius: 0.5,
           blurRadius: 0.5,
-          offset: Offset(0, 3), // changes position of shadow
+          offset: const Offset(0, 3), // changes position of shadow
         ),
       ],
     ),
@@ -121,7 +121,7 @@ Widget BuildJobByIdItem(context, Data model)
                 overflow: TextOverflow.ellipsis,
               ),
                Card(
-                 shape: RoundedRectangleBorder(
+                 shape: const RoundedRectangleBorder(
                    borderRadius: BorderRadius.all(
                      Radius.circular(25.0),
                    ),
@@ -154,7 +154,7 @@ Widget BuildJobByIdItem(context, Data model)
           ),
            Text(
             "${model.createdAt}",
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12
             ),
@@ -166,7 +166,7 @@ Widget BuildJobByIdItem(context, Data model)
   );
 }
 
-Widget BuildJobByCountryItem(context, DataModel model)
+Widget buildJobByCountryItem(context, DataModel model)
 {
   return Container(
     height: MediaQuery.of(context).size.height * 0.3,
@@ -179,7 +179,7 @@ Widget BuildJobByCountryItem(context, DataModel model)
           color: Colors.grey.withOpacity(0.1),
           spreadRadius: 0.5,
           blurRadius: 0.5,
-          offset: Offset(0, 3), // changes position of shadow
+          offset: const Offset(0, 3), // changes position of shadow
         ),
       ],
     ),
@@ -193,29 +193,35 @@ Widget BuildJobByCountryItem(context, DataModel model)
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                "${model.company}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: HexColor("#000080"),
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(25.0),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  "${model.company}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: HexColor("#000080"),
                   ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Image(
-                  image:NetworkImage("${model.companyLogo}"),
-                  fit: BoxFit.cover,
-                  height: 50,
-                  width: 50,
+              ),
+              Expanded(
+                child: Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25.0),
+                    ),
+                  ),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Image(
+                    image:NetworkImage("${model.companyLogo}"),
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
                 ),
               ),
             ],
@@ -238,7 +244,7 @@ Widget BuildJobByCountryItem(context, DataModel model)
           ),
           Text(
             "${model.createdAt}",
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12
             ),
@@ -250,7 +256,7 @@ Widget BuildJobByCountryItem(context, DataModel model)
   );
 }
 
-Widget BuildCountryItem( BuildContext context, CountriesModel model)
+Widget buildCountryItem( BuildContext context, CountriesModel model)
 {
 
   return Padding(
@@ -265,7 +271,7 @@ Widget BuildCountryItem( BuildContext context, CountriesModel model)
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 0.5,
             blurRadius: 0.5,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -274,7 +280,7 @@ Widget BuildCountryItem( BuildContext context, CountriesModel model)
           "${model.name}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),

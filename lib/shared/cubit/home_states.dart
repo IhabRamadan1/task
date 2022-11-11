@@ -1,7 +1,3 @@
-import 'package:task/models/country_with_city.dart';
-import 'package:task/models/filter_jobs.dart';
-import 'package:task/models/home_group.dart';
-import 'package:task/models/jobs_by_group_id.dart';
 
 abstract class HomeStates{}
 class HomeInitialState extends HomeStates{}

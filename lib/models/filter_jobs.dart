@@ -72,8 +72,8 @@ class DataModel {
   String? educationBachelor;
   String? educationExcellent;
   String? educationMa;
-  Null? educationFellowship;
-  Null? educationPhd;
+  String? educationFellowship;
+  String? educationPhd;
   String? createdAt;
   int? establishmentDate;
   String? countryCode;
@@ -159,7 +159,7 @@ class DataModel {
 class LinksModel {
   String? first;
   String? last;
-  Null? prev;
+  String? prev;
   String? next;
 
   LinksModel({this.first, this.last, this.prev, this.next});

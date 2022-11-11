@@ -37,8 +37,8 @@ class HomeCubit extends Cubit<HomeStates>
     emit(HomeBottomNavigationState());
   }
 
-  HomeGroupModel? GetHome;
-  void GetHomeData()
+  HomeGroupModel? getHome;
+  void getHomeData()
   {
     emit(HomeGetLoadingState());
     DioHelper.postData(
@@ -48,18 +48,16 @@ class HomeCubit extends Cubit<HomeStates>
       },
 
     ).then((value){
-      GetHome = HomeGroupModel.fromJson(value.data);
-      //print(GetCountries!.message);
+      getHome = HomeGroupModel.fromJson(value.data);
       emit(HomeGetSuccessState());
     }).catchError((e){
       emit(HomeGetErrorState(e));
-      print(e.toString());
     });
   }
 
 
   JobsByGroupIdModel? jobsByGroupIdModel;
-  void PostJobsByGroupId({required int groupId})
+  void postJobsByGroupId({required int groupId})
   {
     emit(JobsByGroupIdLoadingState());
     DioHelper.postData(
@@ -69,25 +67,23 @@ class HomeCubit extends Cubit<HomeStates>
         }).then((value)
     {
       jobsByGroupIdModel = JobsByGroupIdModel.fromJson(value.data);
-      print(jobsByGroupIdModel!.status);
-      print(value.data);
       if(jobsByGroupIdModel!.status==true)
       {
         emit(JobsByGroupIdSuccessState());
       }
+
     }).catchError((e){
       emit(JobsByGroupIdErrorState(e));
     });
   }
 
 
-  CountryWithCityModel? GetCountries;
-  void GetCountryData()
+  CountryWithCityModel? getCountries;
+  void getCountryData()
   {
     emit(CountryGetLoadingState());
     DioHelper.getData(url: "https://live-job.dr-recruiter.com/api/guest/countiresWithCities").then((value){
-      GetCountries = CountryWithCityModel.fromJson(value.data);
-      print(GetCountries!.message);
+      getCountries = CountryWithCityModel.fromJson(value.data);
       emit(CountryGetSuccessState());
     }).catchError((e){
       emit(CountryGetErrorState(e));
@@ -95,9 +91,8 @@ class HomeCubit extends Cubit<HomeStates>
   }
 
   FilterJobsModel? filterJobsModel;
-  void PostFilterJobs({required int countryId})
+  void postFilterJobs({required int countryId})
   {
-    print("hhhhhhhhhhhhhhhhhh $countryId");
     emit(FilterJobsLoadingState());
     DioHelper.postData(
         url: 'https://live-job.dr-recruiter.com/api/guest/filterJobs',
@@ -106,11 +101,9 @@ class HomeCubit extends Cubit<HomeStates>
         }).then((value)
     {
       filterJobsModel = FilterJobsModel.fromJson(value.data);
-      print(value.data);
         emit(FilterJobsSuccessState());
     }).catchError((e){
-      emit(FilterJobsErrorState(e));
-      print(e.toString());
+      emit(FilterJobsErrorState(e.toString()));
     });
   }
 
